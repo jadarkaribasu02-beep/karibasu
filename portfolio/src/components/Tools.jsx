@@ -8,72 +8,106 @@ const tools = [
     name: 'GitHub', 
     icon: <FaGithub />, 
     desc: 'Version Control & Collaboration',
-    color: 'hover:text-white',
-    glow: 'group-hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]'
+    color: '#ffffff',
+    glow: 'rgba(255,255,255,0.8)',
+    bgGlow: 'rgba(255,255,255,0.15)'
   },
   { 
     name: 'VS Code', 
     icon: <VscVscode />, 
     desc: 'Primary Code Editor',
-    color: 'hover:text-blue-400',
-    glow: 'group-hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]'
+    color: '#3b82f6',
+    glow: 'rgba(59,130,246,0.8)',
+    bgGlow: 'rgba(59,130,246,0.15)'
   },
   { 
     name: 'Antigravity', 
-    icon: <FaCode />, // Using a generic code icon for 'Antigravity' to be safe
+    icon: <FaCode />,
     desc: 'AI Coding Companion',
-    color: 'hover:text-brand-accent',
-    glow: 'group-hover:shadow-[0_0_30px_rgba(14,165,233,0.4)]'
+    color: '#0ea5e9',
+    glow: 'rgba(14,165,233,0.8)',
+    bgGlow: 'rgba(14,165,233,0.15)'
   },
 ];
 
 const Tools = () => {
   return (
-    <section id="tools" className="py-24 w-full relative overflow-hidden">
+    <section id="tools" className="py-32 w-full relative overflow-hidden">
       <div className="px-6 md:px-12 max-w-6xl mx-auto w-full relative z-10">
         
         {/* Header Section */}
-        <div className="mb-16">
+        <div className="mb-24 text-center">
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter"
+            className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter"
+            style={{ textShadow: '0 0 40px rgba(14,165,233,0.3)' }}
           >
             Dev Tools
           </motion.h2>
           <motion.div 
             initial={{ width: 0 }}
-            whileInView={{ width: '100px' }}
+            whileInView={{ width: '150px' }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="h-2 bg-gradient-to-r from-brand-accent to-brand-cyan rounded-full shadow-[0_0_20px_rgba(14,165,233,0.5)]"
+            className="h-2 bg-gradient-to-r from-brand-accent via-purple-500 to-brand-cyan rounded-full mx-auto shadow-[0_0_20px_rgba(14,165,233,0.8)]"
           ></motion.div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           {tools.map((tool, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -10 }}
-              className={`group relative bg-slate-900/40 backdrop-blur-md border border-white/5 p-10 rounded-[3rem] transition-all duration-500 overflow-hidden ${tool.glow}`}
+              transition={{ delay: i * 0.2, type: "spring", stiffness: 50 }}
+              animate={{ y: [0, -15, 0] }}
+              style={{
+                // Use a different float timing for each card to look organic
+                animationDelay: `${i * 0.5}s`,
+              }}
+              whileHover={{ scale: 1.05, y: -20, transition: { duration: 0.2 } }}
+              className="group relative bg-[#04070f]/80 backdrop-blur-3xl border border-white/5 p-10 rounded-[3rem] transition-all duration-300 overflow-hidden"
             >
-              {/* Animated background shape */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-[50px] rounded-full group-hover:bg-brand-accent/10 transition-colors duration-700"></div>
+              {/* Neon border that appears on hover */}
+              <div 
+                className="absolute inset-0 rounded-[3rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none border-2"
+                style={{ borderColor: tool.color, boxShadow: `inset 0 0 30px ${tool.bgGlow}, 0 0 30px ${tool.bgGlow}` }}
+              ></div>
               
-              <div className={`text-6xl mb-8 ${tool.color} transition-colors duration-500 relative z-10`}>
-                {tool.icon}
+              {/* Animated background shape */}
+              <div 
+                className="absolute -top-10 -right-10 w-40 h-40 blur-[60px] rounded-full transition-opacity duration-700 opacity-20 group-hover:opacity-40 animate-pulse-slow"
+                style={{ backgroundColor: tool.color }}
+              ></div>
+              
+              <div className="flex flex-col items-center text-center relative z-10">
+                <motion.div 
+                  className="text-7xl mb-8 transition-colors duration-500 relative"
+                  style={{ color: tool.color, filter: `drop-shadow(0 0 20px ${tool.glow})` }}
+                  whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {tool.icon}
+                  {/* Icon reflection context */}
+                  <div className="absolute -bottom-6 left-0 right-0 h-10 bg-gradient-to-t from-[#04070f] to-transparent opacity-50 blur-sm transform scale-y-[-0.5] pointer-events-none flex justify-center">
+                    {tool.icon}
+                  </div>
+                </motion.div>
+                
+                <h3 className="text-3xl font-black text-white mb-4 tracking-tighter" style={{ textShadow: `0 0 10px ${tool.bgGlow}` }}>{tool.name}</h3>
+                <p className="text-slate-400 font-mono text-sm uppercase tracking-widest font-bold">
+                  {tool.desc}
+                </p>
               </div>
               
-              <h3 className="text-3xl font-black text-white mb-4 tracking-tighter relative z-10">{tool.name}</h3>
-              <p className="text-slate-500 font-mono text-sm uppercase tracking-widest relative z-10">{tool.desc}</p>
-              
-              {/* Interactive bottom bar */}
-              <div className={`h-1 w-0 group-hover:w-full bg-gradient-to-r from-brand-accent to-brand-cyan absolute bottom-0 left-0 transition-all duration-500`}></div>
+              {/* Interactive bottom glowing bar */}
+              <div 
+                className="h-2 w-0 group-hover:w-full absolute bottom-0 left-0 transition-all duration-700 ease-out"
+                style={{ backgroundColor: tool.color, boxShadow: `0 0 20px ${tool.glow}` }}
+              ></div>
             </motion.div>
           ))}
         </div>

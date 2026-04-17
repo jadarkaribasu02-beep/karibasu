@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaInstagram, FaGithub, FaEnvelope } from 'react-icons/fa';
+import { FaInstagram, FaGithub, FaEnvelope, FaCode } from 'react-icons/fa';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 const Hero = () => {
   const containerVariants = {
@@ -116,16 +117,22 @@ const Hero = () => {
           <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-brand-cyan/20 blur-[100px] rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
           
           <motion.div 
-            animate={{ y: [0, -20, 0] }}
+            animate={{ y: [0, -15, 0] }}
             transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-            className="relative z-20 group"
+            className="relative z-20 group w-full aspect-square flex items-center justify-center max-w-[280px] sm:max-w-[350px] lg:max-w-[450px] mx-auto mt-12 lg:mt-0"
           >
-            <div className="absolute -inset-1 bg-gradient-to-tr from-brand-accent to-brand-cyan blur-md rounded-[3.5rem] opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
-            <img
-              src="/coding_avatar.png"
-              alt="Karibasu Jadar Avatar"
-              className="relative w-full h-auto object-cover rounded-[3.5rem] shadow-2xl border-2 border-slate-800/50 backdrop-blur-sm"
-            />
+            {/* Lottie Animation Player for 'Coding Boy' */}
+            <div className="w-full h-full relative flex items-center justify-center z-10 pointer-events-none drop-shadow-[0_0_40px_rgba(14,165,233,0.3)]">
+               <Player
+                 autoplay
+                 loop
+                 src="https://assets3.lottiefiles.com/packages/lf20_w51pcehl.json"
+                 style={{ height: '100%', width: '100%', transform: 'scale(1.2)' }}
+               />
+            </div>
+            
+            {/* Subtle glow underneath the Lottie animation */}
+             <div className="absolute inset-16 bg-gradient-to-tr from-brand-accent/30 to-brand-cyan/20 blur-[50px] z-0 rounded-full"></div>
           </motion.div>
         </motion.div>
       </div>
